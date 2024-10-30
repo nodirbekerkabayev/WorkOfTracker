@@ -13,22 +13,20 @@
 </form>
 
 <?php
-    // define("WORK_TIME", 8);
-    // if (isset($_GET['arrived_at']) and isset($_GET['left_at'])){
-    //     $arrived_at = new DateTime($_GET['arrived_at']);
-    //     $left_at = new DateTime($_GET['left_at']);
-    //     $diff = $arrived_at->diff($left_at);
+    define("WORK_TIME", 8);
+    if (isset($_GET['arrived_at']) and isset($_GET['left_at'])){
+        $arrived_at = new DateTime($_GET['arrived_at']);
+        $left_at = new DateTime($_GET['left_at']);
+        $diff = $arrived_at->diff($left_at);
 
-    //     echo "
-    //     <h1>Arrived Time:   ". $_GET['arrived_at'] . "</h1>
-    //     <h1>Left Time:   ". $_GET['left_at'] ."</h1>
-    //     <h1>Work Time:   ". WORK_TIME ."</h1>
-
-        
-    //     "
-
-    // }
-
+        echo "
+        <h1>Arrived Time:   ". $_GET['arrived_at'] . "</h1>
+        <h1>Left Time:   ". $_GET['left_at'] ."</h1>
+        <h1>Work Time:   ". WORK_TIME ."</h1>
+        <h1>Difference Hour:   $diff->h</h1>
+        <h1>Difference Min:    $diff->i</h1>
+        ";
+    }
 ?>
 
 </body>
