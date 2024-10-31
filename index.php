@@ -27,9 +27,18 @@
         <h1>Difference Min:    $diff->i</h1>
         ";
     }
+
+    $pdo = new PDO('mysql:host=localhost;dbname=work_of_traker', 'root', '1234');
+
+    $quary = "INSERT INTO work_times(kelgan_vaqt, ketgan_vaqt) VALUES (:kelgan, :ketgan)";
+
+    $stmt = $pdo->prepare($quary);
+
+    $stmt->bindParam(':kelgan', $arrived);
+    $stmt->bindParam(':ketgan', $leaved);
+
+    $stmt->execute();
 ?>
 
 </body>
 </html>
-
-<?php echo "hello" ;?>
