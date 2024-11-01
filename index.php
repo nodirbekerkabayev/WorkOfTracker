@@ -6,9 +6,13 @@
     <title>Document</title>
 </head>
 <body>
-    <form method = "GET">
+    <form method = "post">
+        <label for="name">ISMI:  </label>
+        <input type="text" name = "name"><br><br>
+        <label for="arrived_at">KELGAN VAQTI:  </label>
         <input type = "datetime-local" name = "arrived_at"><br><br>
-        <input type = "datetime-local" name = "left_at>
+        <label for="left_at">KETGAN VAQTI:  </label>
+        <input type = "datetime-local" name = "left_at "><br><br>
         <button> Y U B O R I SH</button>
 </form>
 
@@ -28,7 +32,7 @@
         ";
     }
 
-    $pdo = new PDO('mysql:host=localhost;dbname=work_of_traker', 'root', '1234');
+    $pdo = new PDO('mysql:host=127.0.0.1;dbname=work_of_traker', 'root', "");
 
     $quary = "INSERT INTO work_times(kelgan_vaqt, ketgan_vaqt) VALUES (:kelgan, :ketgan)";
 
