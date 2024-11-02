@@ -53,8 +53,8 @@
         $records = $next_stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     ?>
-
-    <table class="table">
+<div class="container">
+    <table class="table table-primary">
         <thead>
             <tr>
                 <th scope="col">#</th>
@@ -78,7 +78,6 @@
             ?>
         </tbody>
     </table>
-
+    </div>
 </body>
-
 </html>
