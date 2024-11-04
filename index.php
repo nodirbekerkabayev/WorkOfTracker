@@ -18,66 +18,84 @@
         <div class="container">
             <div class="mb-3">
                 <label for="name" class="form-label">ISM</label>
-                <input type="text" class="form-control" id="name" aria-describedby="emailHelp" name="name">
+                <input type="text" class="form-control" id="name" aria-describedby="emailHelp" name="name" required>
             </div>
             <div class="mb-3">
                 <label for="arrived_at" class="form-label">KELGAN VAQTI</label>
-                <input type="datetime-local" class="form-control" id="arrived_at" name="arrived_at">
+                <input type="datetime-local" class="form-control" id="arrived_at" name="arrived_at" required>
             </div>
             <div class="mb-3">
                 <label for="left_at" class="form-label">KETGAN VAQTI</label>
-                <input type="datetime-local" class="form-control" id="left_at" name="left_at">
+                <input type="datetime-local" class="form-control" id="left_at" name="left_at" required>
             </div>
             <button class="btn btn-primary" type="submit" value="Submit">YUBORISH</button>
         </div>
     </form>
 
     <?php
+
+    const required_work_hour_daily = 8;
+
     $dsn = "mysql:host=localhost;dbname=work_of_tracker";
     $pdo = new PDO($dsn, username: "root", password: "root");
+    
     if (isset($_POST["name"]) && isset($_POST["arrived_at"]) && isset($_POST["left_at"])) {
-        $name = $_POST["name"];
-        $arrived_at = $_POST["arrived_at"];
-        $left_at = $_POST["left_at"];
 
-        $insertQuery = "INSERT INTO daily(name, arrived_at, left_at)  VALUES (:name, :arrived_at, :left_at)";
+        if (!empty($_POST['name']) && !empty($_POST['arrived_at']) && !empty($_POST['left_at'])) {
 
-        $stmt = $pdo->prepare($insertQuery);
+            $name = $_POST["name"];
+            $arrived_at = new DateTime($_POST["arrived_at"]);
+            $left_at = new DateTime($_POST["left_at"]);
 
-        $stmt->bindParam(":name", $name);
-        $stmt->bindParam(":arrived_at", $arrived_at);
-        $stmt->bindParam(":left_at", $left_at);
-        $stmt->execute();
+            $diff = $arrived_at->diff($left_at);
+            $hour = $diff->h;
+            $minute = $diff->i;
+            $second = $diff->s;
+            $total = ((required_work_hour_daily * 3600) - ($hour * 3600) + ($minute *60));
+
+            $insertQuery = "INSERT INTO daily(name, arrived_at, left_at, required_of)  
+                            VALUES (:name, :arrived_at, :left_at, :required_of)";
+
+            $stmt = $pdo->prepare($insertQuery);
+
+            $stmt->bindParam(":name", $name);
+            $stmt->bindValue(":arrived_at", $arrived_at->format("Y-m-d H:i"));
+            $stmt->bindValue(":left_at", $left_at->format("Y-m-d H:i"));
+            $stmt->bindParam("required_of", $total);
+            $stmt->execute();
+        }
         $select_query = "SELECT * FROM daily";
         $next_stmt = $pdo->query($select_query);
         $records = $next_stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     ?>
-<div class="container">
-    <table class="table table-primary">
-        <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">ISMI</th>
-                <th scope="col">KELGAN VAQTI</th>
-                <th scope="col">KETGAN VAQTI</th>
-            </tr>
-        </thead>
-        <tbody>
-        <?php
-            if (empty($records))
-                return;
-            foreach ($records as $record) {
-                echo "<tr>
+    <div class="container mt-4">
+        <table class="table table-primary">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">ISMI</th>
+                    <th scope="col">KELGAN VAQTI</th>
+                    <th scope="col">KETGAN VAQTI</th>
+                    <th scope="col">QARZDORLIK VAQTI</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                if (empty($records))
+                    return;
+                foreach ($records as $record) {
+                    echo "<tr>
                         <td>{$record['id']}</td>
                         <td>{$record['name']}</td>
                         <td>{$record['arrived_at']}</td>
                         <td>{$record['left_at']}</td>
+                        <td>{$record['required_of']}</td>
                     </tr>";
-            }
-            ?>
-        </tbody>
-    </table>
+                }
+                ?>
+            </tbody>
+        </table>
     </div>
 </body>
 </html>
