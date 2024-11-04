@@ -90,7 +90,7 @@
                         <td>{$record['name']}</td>
                         <td>{$record['arrived_at']}</td>
                         <td>{$record['left_at']}</td>
-                        <td>{$record['required_of']}</td>
+                        <td>" . gmdate('H:i', $record['required_of']) . "</td>     
                     </tr>";
                 }
                 ?>
