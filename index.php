@@ -34,11 +34,16 @@
 
     <?php
 
+
+    require 'DB.php';
+
+    $db = new DB();
+
+    $pdo = $db->pdo;
+
+    
     const required_work_hour_daily = 8;
 
-    $dsn = "mysql:host=localhost;dbname=work_of_tracker";
-    $pdo = new PDO($dsn, username: "root", password: "root");
-    
     if (isset($_POST["name"]) && isset($_POST["arrived_at"]) && isset($_POST["left_at"])) {
 
         if (!empty($_POST['name']) && !empty($_POST['arrived_at']) && !empty($_POST['left_at'])) {
@@ -51,24 +56,37 @@
             $hour = $diff->h;
             $minute = $diff->i;
             $second = $diff->s;
-            $total = ((required_work_hour_daily * 3600) - ($hour * 3600) + ($minute *60));
+            $total = ((required_work_hour_daily * 3600) - (($hour * 3600) + ($minute * 60)));
+            
+            require 'INSERTQUERY.php';
 
-            $insertQuery = "INSERT INTO daily(name, arrived_at, left_at, required_of)  
-                            VALUES (:name, :arrived_at, :left_at, :required_of)";
+            $iq = new INSERTQUERY();
+
+            $insertQuery = $iq->insertQuery;
 
             $stmt = $pdo->prepare($insertQuery);
 
             $stmt->bindParam(":name", $name);
             $stmt->bindValue(":arrived_at", $arrived_at->format("Y-m-d H:i"));
             $stmt->bindValue(":left_at", $left_at->format("Y-m-d H:i"));
-            $stmt->bindParam("required_of", $total);
+            $stmt->bindParam(":required_of", $total);
             $stmt->execute();
+
+            header("Location: index.php");
+            exit;
         }
-        $select_query = "SELECT * FROM daily";
-        $next_stmt = $pdo->query($select_query);
-        $records = $next_stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    require 'SELECTQUERY.php';
+
+    $sq = new   SELECTQUERY();
+
+    $selectQuery = $sq->selectQuery;
+
+    $next_stmt = $pdo->query($selectQuery);
+    $records = $next_stmt->fetchAll(PDO::FETCH_ASSOC);
     ?>
+
     <div class="container mt-4">
         <table class="table table-primary">
             <thead>
@@ -98,4 +116,5 @@
         </table>
     </div>
 </body>
+
 </html>
