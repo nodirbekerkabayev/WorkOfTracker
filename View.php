@@ -85,18 +85,22 @@
             <h1>Work of tracker</h1>
         </div>
         <div class="container">
+
             <div class="mb-3">
                 <label for="name" class="form-label">ISM</label>
                 <input type="text" class="form-control" id="name" aria-describedby="emailHelp" name="name"placeholder="Ismingizni kiriting" required>
             </div>
+
             <div class="mb-3">
                 <label for="arrived_at" class="form-label">KELGAN VAQTI</label>
                 <input type="datetime-local" class="form-control" id="arrived_at" name="arrived_at" required>
             </div>
+
             <div class="mb-3">
                 <label for="left_at" class="form-label">KETGAN VAQTI</label>
                 <input type="datetime-local" class="form-control" id="left_at" name="left_at" required>
             </div>
+            
             <button class="btn btn-primary" type="submit" value="Submit">YUBORISH</button>
         </div>
     </form>
