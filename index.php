@@ -30,7 +30,7 @@
         h1 {
             font-weight: bold;
             color: #007bff;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
         }
 
         .form-label {
