@@ -41,4 +41,10 @@ class WorkDay{
         $stmt = $this->pdo->query($selectQuery);
         return $stmt->fetchAll();
     }
+
+    public function calculateDebtTime(){
+        $selectQuery = " select  name, sum(required_of) as 'debt' from daily group by name;";
+        $stmt = $this->pdo->query($selectQuery);
+        return $stmt->fetchAll();
+    }
 }

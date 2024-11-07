@@ -11,5 +11,6 @@ if (isset($_POST["name"]) && isset($_POST["arrived_at"]) && isset($_POST["left_a
     }
 }
 $records = $workday->getWorkDayList();
+$monthly = $workday->calculateDebtTime();
 
 require 'View.php';
