@@ -49,8 +49,13 @@
             border-color: #007bff;
         }
 
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+        }
+
         button[type="submit"] {
-            width: 100%;
+            width: 48%;
             padding: 12px;
             font-weight: bold;
             border-radius: 8px;
@@ -62,6 +67,21 @@
 
         button[type="submit"]:hover {
             background-color: #0056b3;
+        }
+
+        .btn-export {
+            width: 48%;
+            padding: 12px;
+            font-weight: bold;
+            border-radius: 8px;
+            background-color: #28a745;
+            border: none;
+            color: #fff;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-export:hover {
+            background-color: #218838;
         }
 
         .table-container {
@@ -88,7 +108,8 @@
                 font-size: 24px;
             }
 
-            button[type="submit"] {
+            button[type="submit"],
+            .btn-export {
                 padding: 10px;
             }
         }
@@ -111,7 +132,10 @@
                 <label for="left_at" class="form-label">Ketgan vaqti</label>
                 <input type="datetime-local" class="form-control" id="left_at" name="left_at" required>
             </div>
-            <button type="submit">Yuborish</button>
+            <div class="button-group">
+                <button type="button" class="btn-export">Yuklash</button>
+                <button type="submit">Yuborish</button>
+            </div>
         </div>
     </form>
 
