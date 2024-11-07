@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uz">
 
 <head>
     <meta charset="UTF-8">
@@ -10,10 +10,10 @@
 
     <style>
         body {
-            background-image: url('https://images.pexels.com/photos/628241/pexels-photo-628241.jpeg?auto=compress&cs=tinysrgb&w=600');
+            background-image: url('https://images.pexels.com/photos/5852264/pexels-photo-5852264.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load');
             background-size: cover;
             background-position: center;
-            /* background-repeat: no-repeat; */
+            background-repeat: no-repeat;
             font-family: Arial, sans-serif;
             color: #333;
         }
@@ -22,7 +22,7 @@
             background: rgba(255, 255, 255, 0.85);
             border-radius: 10px;
             padding: 30px;
-            max-width: 500px;
+            max-width: 600px;
             margin-top: 50px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
@@ -30,7 +30,8 @@
         h1 {
             font-weight: bold;
             color: #007bff;
-            margin-bottom: 8px;
+            margin-bottom: 16px;
+            text-align: center;
         }
 
         .form-label {
@@ -50,16 +51,31 @@
 
         button[type="submit"] {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             font-weight: bold;
             border-radius: 8px;
             background-color: #007bff;
             border: none;
+            color: #fff;
             transition: background-color 0.3s ease;
         }
 
         button[type="submit"]:hover {
             background-color: #0056b3;
+        }
+
+        .table-container {
+            margin-top: 30px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            max-width: 800px;
+        }
+
+        .table-primary th {
+            background-color: #007bff;
+            color: #fff;
         }
 
         @media (max-width: 576px) {
@@ -73,7 +89,7 @@
             }
 
             button[type="submit"] {
-                padding: 8px;
+                padding: 10px;
             }
         }
     </style>
@@ -81,91 +97,80 @@
 
 <body>
     <form method="POST">
-        <div class="container text-center text-primary">
-            <h1>Work of tracker</h1>
-        </div>
         <div class="container">
-
+            <h1>Work of Tracker</h1>
             <div class="mb-3">
-                <label for="name" class="form-label">ISM</label>
-                <input type="text" class="form-control" id="name" aria-describedby="emailHelp" name="name"
-                    placeholder="Ismingizni kiriting" required>
+                <label for="name" class="form-label">Ism</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Ismingizni kiriting" required>
             </div>
-
             <div class="mb-3">
-                <label for="arrived_at" class="form-label">KELGAN VAQTI</label>
+                <label for="arrived_at" class="form-label">Kelgan vaqti</label>
                 <input type="datetime-local" class="form-control" id="arrived_at" name="arrived_at" required>
             </div>
-
             <div class="mb-3">
-                <label for="left_at" class="form-label">KETGAN VAQTI</label>
+                <label for="left_at" class="form-label">Ketgan vaqti</label>
                 <input type="datetime-local" class="form-control" id="left_at" name="left_at" required>
             </div>
-
-            <button class="btn btn-primary" type="submit" value="Submit">YUBORISH</button>
+            <button type="submit">Yuborish</button>
         </div>
     </form>
 
-
-
-    <div class="container mt-4">
+    <div class="container table-container">
         <table class="table table-primary">
             <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">ISMI</th>
-                    <th scope="col">KELGAN VAQTI</th>
-                    <th scope="col">KETGAN VAQTI</th>
-                    <th scope="col">QARZDORLIK VAQTI</th>
+                    <th scope="col">Ismi</th>
+                    <th scope="col">Kelgan vaqti</th>
+                    <th scope="col">Ketgan vaqti</th>
+                    <th scope="col">Qarzdorlik vaqti</th>
+                    <th scope="col">Qarzdorlik hisobi</th>
                 </tr>
             </thead>
             <tbody>
-
                 <?php
-
-                if (empty($records))
-                    return;
-                foreach ($records as $record) {
-                    echo "<tr>
-                        <td>{$record['id']}</td>
-                        <td>{$record['name']}</td>
-                        <td>{$record['arrived_at']}</td>
-                        <td>{$record['left_at']}</td>
-                        <td>" . gmdate('H:i', $record['required_of']) . "</td>    
-                    </tr>";
+                if (!empty($records)) {
+                    foreach ($records as $record) {
+                        echo "<tr>
+                            <td>{$record['id']}</td>
+                            <td>{$record['name']}</td>
+                            <td>{$record['arrived_at']}</td>
+                            <td>{$record['left_at']}</td>
+                            <td>" . gmdate('H:i', $record['required_of']) . "</td>   
+                            <td><a href='index.php?done=" . $record['id'] . "'>Done</a></td> 
+                        </tr>";
+                    }
                 }
                 ?>
             </tbody>
         </table>
     </div>
 
-    <div class="container mt-4">
+    <div class="container table-container">
         <table class="table table-primary">
             <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">ISMI</th>
-                    <th scope="col">QARZDORLIGI</th>
+                    <th scope="col">Ismi</th>
+                    <th scope="col">Qarz vaqti</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
-                if (empty($monthly))
-                    return;
-                foreach ($monthly as $record) {
-                    $num =1;
-                    echo "<tr>
-                        <td>$num</td>
-                        <td>{$record['name']}</td>
-                        <td>" . gmdate('H:i', $record['debt']) . "</td>    
-                    </tr>";
-                    $num++;
+                if (!empty($monthly)) {
+                    $num = 1;
+                    foreach ($monthly as $record) {
+                        echo "<tr>
+                            <td>$num</td>
+                            <td>{$record['name']}</td>
+                            <td>" . gmdate('H:i', $record['debt']) . "</td>    
+                        </tr>";
+                        $num++;
+                    }
                 }
                 ?>
-
             </tbody>
         </table>
     </div>
 </body>
-
 </html>

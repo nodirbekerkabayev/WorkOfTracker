@@ -47,4 +47,13 @@ class WorkDay{
         $stmt = $this->pdo->query($selectQuery);
         return $stmt->fetchAll();
     }
+
+    public function markAsDone(int $id){
+        $query = "UPDATE daily SET required_of=0 WHERE id = :id";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        header("Location: index.php");
+        exit;
+    }
 }
