@@ -6,8 +6,8 @@ Bu loyiha HTML, CSS va PHP yordamida yaratilgan. Loyiha foydalanuvchilarga ishga
 
 - **Til**: HTML, CSS, PHP
 - **Ma'lumotlar bazasi**: MySQL
-- **Maqsad**: Loyiha biror bir kampaniyaning ishchilaririni kelgan va ketgan vaqtini kiritishlari va ishlashi kerak bo'lgan vaqtdan qancha kam ishlagani va
--             yakunda esa bir ishchining qancha qarzdorligi bor shularni table ko'rinishida chiqaradi
+- **Maqsad**: Loyiha biror bir kampaniyaning ishchilaririni kelgan va ketgan vaqtini kiritishlari va ishlashi kerak bo'lgan vaqtdan qancha kam ishlagani va yakunda esa bir ishchining qancha qarzdorligi bor shularni table ko'rinishida chiqaradi
+
 
 ## Talablar
 
