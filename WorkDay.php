@@ -37,9 +37,9 @@ class WorkDay{
     }
 
     public function getWorkDayList(){
-        $selectQuery = "SELECT * FROM daily";
+        $selectQuery = "SELECT * FROM daily ORDER BY arrived_at DESC";
         $stmt = $this->pdo->query($selectQuery);
-        return $stmt->fetchAll();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function calculateDebtTime(){
@@ -55,5 +55,24 @@ class WorkDay{
         $stmt->execute();
         header("Location: index.php");
         exit;
+    }
+
+    public function getWorkDayListWithPagination(int $offset){
+        $offset = $offset ? ($offset * 10) - 10 :0;
+        $query = "SELECT * FROM daily ORDER BY arrived_at DESC LIMIT 10 OFFSET ". $offset."";
+        $query= $this->pdo->prepare($query);
+        // $query= $query->execute();
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getTotalRecords(){
+        $query = "SELECT COUNT(id) as pageCount FROM daily";
+        $stmt = $this->pdo->query($query);
+        return $stmt->fetchAll( PDO::FETCH_ASSOC);
+    }
+
+    public function calculatePageCount(){
+        $total = $this->getTotalRecords()[0]['pageCount'];
+        return ceil($total / 10);
     }
 }
